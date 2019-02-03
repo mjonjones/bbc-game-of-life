@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Cell from './Cell';
 
 // Represents the game board and mounts onto index.html when app is running
 export default class App extends Component {
@@ -98,6 +99,7 @@ export default class App extends Component {
 
     // If the Coordinates are on the game board, set the state of teh cell (live/dead) to the opposite
     // of its current state.
+    console.log("Recieved click: x =" + x + " , y =" + y)
     if(x>=0 && x <= this.columns && y>= 0 && y <= this.rows){
       this.board[y] [x] = !this.board[y] [x];
     }
@@ -108,6 +110,9 @@ export default class App extends Component {
 
 
   render() {
+
+    const { cells } = this.state;
+
     return (
       // Div that represents the board, using App.css
       <div className="board" 
@@ -115,7 +120,12 @@ export default class App extends Component {
       onClick={this.handleClick}
       // Saving te reference of where the player clicked, since CSS has been used to create the grid
       ref={ (z) => {this.boardRef = z; }}>
-      
+
+      {/* Using JSX to map the cells to the board by the x,y coords*/}
+        {cells.map(cell => (
+          <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
+        ))}
+
       </div>
     );
   }

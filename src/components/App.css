@@ -2,7 +2,7 @@
 
   /* Creates a black area to create the board of cells*/
   position: relative;
-  margin: 50px auto;
+  margin: 0px auto;
   background-color: #000;
   height: 600px;
   width: 800px;
@@ -14,4 +14,11 @@
 
   /* Size of each individual cell */
   background-size: 20px 20px;
+
+
+}
+
+.cell {
+  background: #ffffff;
+  position: absolute;
 }
