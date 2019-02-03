@@ -1,0 +1,17 @@
+.board{
+
+  /* Creates a black area to create the board of cells*/
+  position: relative;
+  margin: 50px auto;
+  background-color: #000;
+  height: 600px;
+  width: 800px;
+  
+  /* Vertical and horizontal lines that draw the grid */
+  background-image:
+    linear-gradient(#ffffff 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff 1px, transparent 1px);
+
+  /* Size of each individual cell */
+  background-size: 20px 20px;
+}
