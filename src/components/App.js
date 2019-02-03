@@ -13,7 +13,7 @@ class App extends Component {
     this.columns = 40;
 
     // On start create the board 
-    this.board = makeBoard();
+    this.board = this.makeBoard();
   }
 
   state = {
@@ -42,6 +42,28 @@ class App extends Component {
   }
 
 
+  // Creates the cells for the 2D Array
+  makeCells(){
+
+    // Initialise the Array of Cells
+    let cells =[];
+
+    // Iterate through each of the 'rows' of the 2D array
+    for(let i =0; i< this.rows; i++){
+
+      // Iterate through each of the 'Columns' of the 2D array
+      for (let x = 0; x < this.cols; x++) {
+
+        // If the cell is true (Live/on), push it to the cells array
+        // Note that at the method makeBoard() creates no empty cells to begin with
+        if (this.board[i][x]) {
+          cells.push({ x, i });
+        }
+      }
+    }
+
+    return cells;
+  }
   
 
   
