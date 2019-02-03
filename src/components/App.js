@@ -65,14 +65,34 @@ class App extends Component {
     return cells;
   }
   
+  // Since clicking an area of the board is relative to the client area (Where the board is located), this
+  // method has been created in order to identify where the coordinate is on the browser, relative to the board
+  getElementCoords(){
 
-  
+    // Location on the board using the boardRef when the div is clicked
+    const boardLocation = this.boardRef.getBoundingClientRect();
+
+    // Area on the DOM (Document Object Model)
+    const doc = document.documentElement;
+
+    return{
+      // X coord 
+      x: (boardLocation.left + window.pageXOffset) - doc.clientLeft,
+
+      // Y coord
+      y: (boardLocation.top + window.pageYOffset) - doc.clientTop,
+    };
+  }
 
   render() {
     return (
       // Div that represents the board, using App.css
-      <div className="board">
-
+      <div className="board" 
+      // On click handler when the player clicks somewhere on the board such as a cell
+      onClick={this.handleClick}
+      // Saving te reference of where the player clicked, since CSS has been used to create the grid
+      ref={ (z) => {this.boardRef = z; }}>
+      
       </div>
     );
   }

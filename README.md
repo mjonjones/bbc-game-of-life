@@ -66,7 +66,7 @@ Amazon Web Services (AWS) could be used to deploy the application onto the cloud
 
 ## Author
 
-* **Morgan Jones** - *Project Dev* - [mjonjones](https://github.com/mjonjones). Please note that I work off to seperate laptops, which have resulted in two Morgan Jones contributing to this project.
+* **Morgan Jones** - *Project Dev* - [mjonjones](https://github.com/mjonjones). Please note that I work off two seperate laptops, which have resulted in two Morgan Jones contributing to this project.
 
 ## Acknowledgments
 

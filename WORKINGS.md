@@ -121,3 +121,9 @@ Button to 'evolve' state of game:
 
 
 Alternativley could use a 2D array
+
+
+### Using a sD array
+
+A 2d Array could be used to make the grid and then allow the user to click the individual cells.
+However, since the cells are no longer components, the entire board must be clicked instead. This is possible but the specific coordinates of the cells will need to be calculated using a method.
