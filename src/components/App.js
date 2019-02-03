@@ -26,15 +26,15 @@ class App extends Component {
     let board = []
 
     // While i < number of rows, iterate i...
-    for (let i=0; i<this.rows; i++){
+    for (let y=0; y<this.rows; y++){
 
       // For each index in board, create a new array
-      board[i] = [];
+      board[y] = [];
 
       // iterate x through the new row to create the columns of the grid
       for(let x=0; x<this.columns; x++){
         // Initial state for each cell being false (off/dead)
-        board[i] [x] = false;
+        board[y] [x] = false;
       }
 
     }
@@ -49,15 +49,15 @@ class App extends Component {
     let cells =[];
 
     // Iterate through each of the 'rows' of the 2D array
-    for(let i =0; i< this.rows; i++){
+    for(let y =0; y< this.rows; y++){
 
       // Iterate through each of the 'Columns' of the 2D array
       for (let x = 0; x < this.cols; x++) {
 
         // If the cell is true (Live/on), push it to the cells array
         // Note that at the method makeBoard() creates no empty cells to begin with
-        if (this.board[i][x]) {
-          cells.push({ x, i });
+        if (this.board[y][x]) {
+          cells.push({ x, y });
         }
       }
     }
@@ -83,6 +83,29 @@ class App extends Component {
       y: (boardLocation.top + window.pageYOffset) - doc.clientTop,
     };
   }
+
+
+  // Method that handles the click on the board
+  handleClick = (event) => {
+
+    // Represents the coordOffset
+    const elementCoords = this.getElementCoords();
+    const offsetX = event.clientX - elementCoords.x;
+    const offsetY = event.clientY - elementCoords.y;
+
+    const x = Math.floor(offsetX/20);
+    const y = Math.floor(offsetY/20);
+
+    // If the Coordinates are on the game board, set the state of teh cell (live/dead) to the opposite
+    // of its current state.
+    if(x>=0 && x <= this.columns && y>= 0 && y <= this.rows){
+      this.board[y] [x] = !this.board[y] [x];
+    }
+
+    // Update the cells state and call the function that makes a cell live
+    this.setState({ cells: this.makeCells() })
+  }
+
 
   render() {
     return (
