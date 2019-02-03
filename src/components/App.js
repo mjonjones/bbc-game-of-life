@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 // Represents the game board and mounts onto index.html when app is running
-class App extends Component {
+export default class App extends Component {
 
   constructor(){
     super();
@@ -121,6 +121,6 @@ class App extends Component {
   }
 }
 
-export default App;
+
 
 
