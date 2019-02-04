@@ -32,25 +32,39 @@ export default class App extends Component {
   // Function to run game
   startGame = () => {
     this.setState({running: true});
+    // Call the function that evolves the game
+    this.evolveGame();
   }
 
   // Function to stop game
   stopGame = () => {
     this.setState({running: false});
+
+    // Stops the callbacks
+    if (this.asynchTimeout) {
+      window.clearTimeout(this.asynchTimeout);
+      this.asynchTimeout = null;
+    }
   }
 
   // Function that evolves the game through each iteration
   evolveGame(){
 
-  
-    
+    // Creates a new board
+    let emptyBoard = this.makeBoard();
+
+
+    // Updates the board and cells states.
+    this.board = emptyBoard;
+    this.setState({cells : this.makeCells})
+
+    // Uses of window.setTimeout to loop iterations using "asynchronus coding"
+    this.asynchTimeout = window.setTimeout(() => {
+      this.evolveGame();
+      // Every 100 ms
+    }, this.state.evolveTime);
+
   }
-
-
-
-
-
-
 
 
   // Creates an 2D array to represent the board
@@ -99,6 +113,9 @@ export default class App extends Component {
     console.log(cells);
     return cells;
   }
+
+  // Function that calculates the number of neighbours a cell has.
+  
   
   // Since clicking an area of the board is relative to the client area (Where the board is located), this
   // method has been created in order to identify where the coordinate is on the browser, relative to the board
@@ -148,19 +165,34 @@ export default class App extends Component {
     const { cells } = this.state;
 
     return (
-      // Div that represents the board, using App.css
-      <div className="board" 
-      // On click handler when the player clicks somewhere on the board such as a cell
-      onClick={this.handleClick}
-      // Saving te reference of where the player clicked, since CSS has been used to create the grid
-      ref={ (z) => {this.boardRef = z; }}>
+      <div>
+        {/* Div that represents the board, using App.css */}
+        <div className="board" 
+        // On click handler when the player clicks somewhere on the board such as a cell
+        onClick={this.handleClick}
+        // Saving te reference of where the player clicked, since CSS has been used to create the grid
+        ref={ (z) => {this.boardRef = z; }}>
 
-      {/* Using JSX to map the cells to the board by the x,y coords*/}
-        {cells.map(cell => (
-          <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
-        ))}
+          {/* Using JSX to map the cells to the board by the x,y coords*/}
+            {cells.map(cell => (
+              <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
+            ))}
 
-      </div>
+        </div>
+
+        {/* Div that holds the run/stop button */}
+        <div>
+          
+          {/* JSX Conditional that renders the correct button if game is running or not */}
+          
+          {/* {running ?
+            <button onClick={this.startGame}>Start</button> :
+            <button onClick={this.stopGame}>Stop</button>
+          } */}
+
+        </div>
+
+    </div>
     );
   }
 }

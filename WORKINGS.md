@@ -127,3 +127,5 @@ Alternativley could use a 2D array
 
 A 2d Array could be used to make the grid and then allow the user to click the individual cells.
 However, since the cells are no longer components, the entire board must be clicked instead. This is possible but the specific coordinates of the cells will need to be calculated using a method.
+
+From here the X, Y coordinates can be stored in the 2D Array for every live cell and can be used to work out the number of neighnours it has
