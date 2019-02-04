@@ -9,8 +9,8 @@
   
   /* Vertical and horizontal lines that draw the grid */
   background-image:
-    linear-gradient(#ffffff 1px, transparent 1px),
-    linear-gradient(90deg, #ffffff 1px, transparent 1px);
+    linear-gradient(#dbd4d4 1px, transparent 1px),
+    linear-gradient(90deg, #dbd4d4 1px, transparent 1px);
 
   /* Size of each individual cell */
   background-size: 20px 20px;
@@ -19,6 +19,6 @@
 }
 
 .cell {
-  background: #ffffff;
+  background: #cccccc;
   position: absolute;
 }

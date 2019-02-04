@@ -35,7 +35,7 @@ export default class App extends Component {
       // iterate x through the new row to create the columns of the grid
       for(let x=0; x<this.columns; x++){
         // Initial state for each cell being false (off/dead)
-        board[y] [x] = false;
+        board[y][x] = false;
       }
 
     }
@@ -53,7 +53,7 @@ export default class App extends Component {
     for(let y =0; y< this.rows; y++){
 
       // Iterate through each of the 'Columns' of the 2D array
-      for (let x = 0; x < this.cols; x++) {
+      for (let x = 0; x < this.columns; x++) {
 
         // If the cell is true (Live/on), push it to the cells array
         // Note that at the method makeBoard() creates no empty cells to begin with
@@ -63,6 +63,8 @@ export default class App extends Component {
       }
     }
 
+    // Debugging Console log to check that cells are being added.
+    console.log(cells);
     return cells;
   }
   
@@ -101,7 +103,7 @@ export default class App extends Component {
     // of its current state.
     console.log("Recieved click: x =" + x + " , y =" + y)
     if(x>=0 && x <= this.columns && y>= 0 && y <= this.rows){
-      this.board[y] [x] = !this.board[y] [x];
+      this.board[y][x] = !this.board[y][x];
     }
 
     // Update the cells state and call the function that makes a cell live
