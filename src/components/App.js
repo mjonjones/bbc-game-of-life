@@ -18,8 +18,40 @@ export default class App extends Component {
   }
 
   state = {
+    // Represents the live cells on the board
     cells: [],
+
+    // Represents the time before the game 'evolves' 
+    evolveTime: 100,
+
+    // Boolean to control start/stop of the game
+    running: false,
   }
+
+  // TODO: Combine start/stop btns
+  // Function to run game
+  startGame = () => {
+    this.setState({running: true});
+  }
+
+  // Function to stop game
+  stopGame = () => {
+    this.setState({running: false});
+  }
+
+  // Function that evolves the game through each iteration
+  evolveGame(){
+
+  
+    
+  }
+
+
+
+
+
+
+
 
   // Creates an 2D array to represent the board
   makeBoard(){
