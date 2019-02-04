@@ -53,6 +53,28 @@ export default class App extends Component {
     // Creates a new board
     let emptyBoard = this.makeBoard();
 
+    // iterate through all the cells on the grid
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+
+          // Claculate number of neighbours the cell has
+          let neighbors = this.calculateNeighbors(this.board, x, y);
+
+          // Conditions for the GAME OF LIFE
+          if (this.board[y][x]) {
+              if (neighbors === 2 || neighbors === 3) {
+                  emptyBoard[y][x] = true;
+              } else {
+                  emptyBoard[y][x] = false;
+              }
+          } else {
+              if (!this.board[y][x] && neighbors === 3) {
+                  emptyBoard[y][x] = true;
+              }
+          }
+      }
+    }
+
 
     // Updates the board and cells states.
     this.board = emptyBoard;
@@ -123,7 +145,28 @@ export default class App extends Component {
 
     // All the directions of the 8 possible neighbours of the cell
     const neighbourDirections = [[-1,1], [0,1], [1,1], [-1,0], [1,0], [-1,-1], [0,-1], [1,-1]];
+
+    // Iterate i through the neighbours array
+    for(let i =0; i < neighbourDirections.length; i++){
+    
+      const direction = neighbourDirections[i];
+      // Find the x Coord of the neignbour, relative to the input cell x
+      let xCoord= x + direction[0];
+      // Find the y Coord of the neignbour, relative to the input cell y
+      let yCoord= y + direction[1];
+
+      // If the neighbour cell is live and the cell Exists on the board ( Few edge cases on the side)
+      // neighbours + 1
+      if(board[yCoord][xCoord] && xCoord >= 0 && xCoord < this.columns && yCoord >= 0 && yCoord < this.rows){
+        cellNeighbours = cellNeighbours + 1; 
+      }
+    }
+
+    return cellNeighbours;
   }
+
+
+
   
   // Since clicking an area of the board is relative to the client area (Where the board is located), this
   // method has been created in order to identify where the coordinate is on the browser, relative to the board
@@ -191,12 +234,7 @@ export default class App extends Component {
         {/* Div that holds the run/stop button */}
         <div>
           
-          {/* JSX Conditional that renders the correct button if game is running or not */}
-          
-          {/* {running ?
-            <button onClick={this.startGame}>Start</button> :
-            <button onClick={this.stopGame}>Stop</button>
-          } */}
+    
 
         </div>
 
