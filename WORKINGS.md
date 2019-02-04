@@ -129,3 +129,20 @@ A 2d Array could be used to make the grid and then allow the user to click the i
 However, since the cells are no longer components, the entire board must be clicked instead. This is possible but the specific coordinates of the cells will need to be calculated using a method.
 
 From here the X, Y coordinates can be stored in the 2D Array for every live cell and can be used to work out the number of neighnours it has
+
+
+### Possible directions of a cell by X, Y
+
+0 Represents the live Cell which is at 0,0
+
+```
++-----+-----+-----+
+| -1,1| 0,1 | 1,1 |
++-----+-----+-----+
+|-1,0 |  0  | 1,0 |
++-----+-----+-----+
+|-1,-1|0,-1 |1,-1 |
++-----+-----+-----+
+```
+
+

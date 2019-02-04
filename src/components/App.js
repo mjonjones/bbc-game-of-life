@@ -115,7 +115,15 @@ export default class App extends Component {
   }
 
   // Function that calculates the number of neighbours a cell has.
-  
+  // Takes the x, y coords of the cell along with the CURRENT game board
+  calculateCellNeighbours(board, x, y) {
+
+    // instantiation of variable
+    let cellNeighbours = 0;
+
+    // All the directions of the 8 possible neighbours of the cell
+    const neighbourDirections = [[-1,1], [0,1], [1,1], [-1,0], [1,0], [-1,-1], [0,-1], [1,-1]];
+  }
   
   // Since clicking an area of the board is relative to the client area (Where the board is located), this
   // method has been created in order to identify where the coordinate is on the browser, relative to the board
