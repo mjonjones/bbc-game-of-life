@@ -28,6 +28,9 @@ export default class App extends Component {
     running: false,
   }
 
+
+  //----------------------------------- CONTROLLER FUNCTIONS -------------------------------------------
+ 
   // TODO: Combine start/stop btns
   // Function to run game
   startGame = () => {
@@ -37,59 +40,19 @@ export default class App extends Component {
   }
 
   // Function to stop game
-  stopGame = () => {
-    this.setState({running: false});
+  // stopGame = () => {
+  //   this.setState({running: false});
 
-    // Stops the callbacks
-    if (this.asynchTimeout) {
-      window.clearTimeout(this.asynchTimeout);
-      this.asynchTimeout = null;
-    }
-  }
+  //   // Stops the callbacks
+  //   if (this.asynchTimeout) {
+  //     window.clearTimeout(this.asynchTimeout);
+  //     this.asynchTimeout = null;
+  //   }
+  // }
 
-  // Function that evolves the game through each iteration
-  evolveGame(){
-
-    // Creates a new board
-    let emptyBoard = this.makeBoard();
-
-    // iterate through all the cells on the grid
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
-
-          // Claculate number of neighbours the cell has
-          let neighbors = this.calculateNeighbors(this.board, x, y);
-
-          // Conditions for the GAME OF LIFE
-          if (this.board[y][x]) {
-              if (neighbors === 2 || neighbors === 3) {
-                  emptyBoard[y][x] = true;
-              } else {
-                  emptyBoard[y][x] = false;
-              }
-          } else {
-              if (!this.board[y][x] && neighbors === 3) {
-                  emptyBoard[y][x] = true;
-              }
-          }
-      }
-    }
-
-
-    // Updates the board and cells states.
-    this.board = emptyBoard;
-    this.setState({cells : this.makeCells})
-
-    // Uses of window.setTimeout to loop iterations using "asynchronus coding"
-    this.asynchTimeout = window.setTimeout(() => {
-      this.evolveGame();
-      // Every 100 ms
-    }, this.state.evolveTime);
-
-  }
-
-
-  // Creates an 2D array to represent the board
+// ------------------------------------------- BOARD FUNCTIONS ----------------------------------------
+  
+// Creates an 2D array to represent the board
   makeBoard(){
     // Initial Array that becomes the 2D array
     let board = []
@@ -132,41 +95,55 @@ export default class App extends Component {
     }
 
     // Debugging Console log to check that cells are being added.
-    console.log(cells);
+    console.log("Cells after makeCell() ");
+    console.log(cells)
+
     return cells;
   }
 
   // Function that calculates the number of neighbours a cell has.
   // Takes the x, y coords of the cell along with the CURRENT game board
-  calculateCellNeighbours(board, x, y) {
+  numNeigh(board, x, y) {
 
-    // instantiation of variable
-    let cellNeighbours = 0;
+    // // instantiation of variable
+    // let cellNeighbours = 0;
 
-    // All the directions of the 8 possible neighbours of the cell
-    const neighbourDirections = [[-1,1], [0,1], [1,1], [-1,0], [1,0], [-1,-1], [0,-1], [1,-1]];
+    // // All the directions of the 8 possible neighbours of the cell
+    // const neighbourDirections = [[-1,1], [0,1], [1,1], [-1,0], [1,0], [-1,-1], [0,-1], [1,-1]];
 
-    // Iterate i through the neighbours array
-    for(let i =0; i < neighbourDirections.length; i++){
+    // // Iterate i through the neighbours array
+    // for(let i =0; i < neighbourDirections.length; i++){
     
-      const direction = neighbourDirections[i];
-      // Find the x Coord of the neignbour, relative to the input cell x
-      let xCoord= x + direction[0];
-      // Find the y Coord of the neignbour, relative to the input cell y
-      let yCoord= y + direction[1];
+    //   const direction = neighbourDirections[i];
+    //   // Find the x Coord of the neignbour, relative to the input cell x
+    //   let xCoord= x + direction[1];
+    //   // Find the y Coord of the neignbour, relative to the input cell y
+    //   let yCoord= y + direction[0];
 
-      // If the neighbour cell is live and the cell Exists on the board ( Few edge cases on the side)
-      // neighbours + 1
-      if(board[yCoord][xCoord] && xCoord >= 0 && xCoord < this.columns && yCoord >= 0 && yCoord < this.rows){
-        cellNeighbours = cellNeighbours + 1; 
-      }
-    }
+    //   // If the neighbour cell is live and the cell Exists on the board ( Few edge cases on the side)
+    //   // neighbours + 1
+    //   if(board[yCoord][xCoord] && xCoord >= 0 && xCoord < this.columns && yCoord >= 0 && yCoord < this.rows){
+    //     cellNeighbours = cellNeighbours + 1; 
+        
+    //   }
+    // }
 
-    return cellNeighbours;
+    // return cellNeighbours;
+
+    let neighbors = 0;
+        const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+        for (let i = 0; i < dirs.length; i++) {
+            const dir = dirs[i];
+            let y1 = y + dir[0];
+            let x1 = x + dir[1];
+
+            if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+                neighbors++;
+            }
+        }
+
+        return neighbors;
   }
-
-
-
   
   // Since clicking an area of the board is relative to the client area (Where the board is located), this
   // method has been created in order to identify where the coordinate is on the browser, relative to the board
@@ -208,24 +185,95 @@ export default class App extends Component {
 
     // Update the cells state and call the function that makes a cell live
     this.setState({ cells: this.makeCells() })
+    console.log("Cell State:");
+    console.log(this.state.cells);
   }
 
 
+  // Function that evolves the game through each iteration
+  evolveGame(){
+    // // Creates a new board
+    // let emptyBoard = this.makeBoard();
+    // // iterate through all the cells on the grid
+    // for (let y = 0; y < this.rows; y++) {
+    //   for (let x = 0; x < this.cols; x++) {
+
+    //       // Calculate number of neighbours the cell has
+    //       let neighbours = this.calculateCellNeighbours(this.board, x, y);
+    //       console.log("neigh " + neighbours);
+    //       // Conditions for the GAME OF LIFE
+    //       if (this.board[y][x]) {
+    //           if (neighbours === 2 || neighbours === 3) {
+    //               emptyBoard[y][x] = true;
+    //           } else {
+    //               emptyBoard[y][x] = false;
+    //           }
+    //       } else {
+    //           if (!this.board[y][x] && neighbours === 3) {
+    //               emptyBoard[y][x] = true;
+    //           }
+    //       }
+    //   }
+    // }
+
+    // console.log("Board populated")
+    // // Updates the board and cells states.
+    // this.board = emptyBoard;
+    // console.log("Board Updated")
+    // this.setState({cells : this.makeCells})
+    // console.log("Cells Updated")
+
+    let newBoard = this.makeBoard();
+
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                let neighbors = this.numNeigh(this.board, x, y);
+                if (this.board[y][x]) {
+                    if (neighbors === 2 || neighbors === 3) {
+                        newBoard[y][x] = true;
+                    } else {
+                        newBoard[y][x] = false;
+                    }
+                } else {
+                    if (!this.board[y][x] && neighbors === 3) {
+                        newBoard[y][x] = true;
+                    }
+                }
+            }
+        }
+
+        this.board = newBoard;
+        console.log(this.board);
+        this.setState({ cells: this.makeCells() });
+        console.log(this.cells);
+
+    
+    // // Uses of window.setTimeout to loop iterations using "asynchronus coding"
+    // this.asynchTimeout = window.setTimeout(() => {
+    //   this.evolveGame();
+    //   // Every 100 ms
+    // }, this.state.evolveTime);
+
+  }
+
+  // ------------------------------- RENDERED HTML ----------------------------------------------------------
+
   render() {
 
-    const { cells } = this.state;
-
+    const cells = this.state.cells;
+    console.log("Re-render");
     return (
       <div>
         {/* Div that represents the board, using App.css */}
         <div className="board" 
         // On click handler when the player clicks somewhere on the board such as a cell
         onClick={this.handleClick}
-        // Saving te reference of where the player clicked, since CSS has been used to create the grid
+        // Saving the reference of where the player clicked, since CSS has been used to create the grid
         ref={ (z) => {this.boardRef = z; }}>
-
+          
           {/* Using JSX to map the cells to the board by the x,y coords*/}
             {cells.map(cell => (
+              
               <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
             ))}
 
@@ -234,8 +282,8 @@ export default class App extends Component {
         {/* Div that holds the run/stop button */}
         <div>
           
-    
-
+              <button onClick={this.startGame}>Evolve</button>
+              {/* <button onClick={this.stopGame}>Stop</button> */}
         </div>
 
     </div>
