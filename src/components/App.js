@@ -105,44 +105,31 @@ export default class App extends Component {
   // Takes the x, y coords of the cell along with the CURRENT game board
   numNeigh(board, x, y) {
 
-    // // instantiation of variable
-    // let cellNeighbours = 0;
 
-    // // All the directions of the 8 possible neighbours of the cell
-    // const neighbourDirections = [[-1,1], [0,1], [1,1], [-1,0], [1,0], [-1,-1], [0,-1], [1,-1]];
-
-    // // Iterate i through the neighbours array
-    // for(let i =0; i < neighbourDirections.length; i++){
-    
-    //   const direction = neighbourDirections[i];
-    //   // Find the x Coord of the neignbour, relative to the input cell x
-    //   let xCoord= x + direction[1];
-    //   // Find the y Coord of the neignbour, relative to the input cell y
-    //   let yCoord= y + direction[0];
-
-    //   // If the neighbour cell is live and the cell Exists on the board ( Few edge cases on the side)
-    //   // neighbours + 1
-    //   if(board[yCoord][xCoord] && xCoord >= 0 && xCoord < this.columns && yCoord >= 0 && yCoord < this.rows){
-    //     cellNeighbours = cellNeighbours + 1; 
-        
-    //   }
-    // }
-
-    // return cellNeighbours;
-
+    // instantiation of variable
     let neighbors = 0;
-        const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
-        for (let i = 0; i < dirs.length; i++) {
-            const dir = dirs[i];
-            let y1 = y + dir[0];
-            let x1 = x + dir[1];
 
-            if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
-                neighbors++;
-            }
-        }
+    // All the directions of the 8 possible neighbours of the cell
+    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
 
-        return neighbors;
+    // Iterate i through the neighbours array
+    for (let i = 0; i < dirs.length; i++) {
+
+      const dir = dirs[i];
+
+      // Find the x Coord of the neignbour, relative to the input cell x
+      let y1 = y + dir[0];
+
+      // Find the y Coord of the neignbour, relative to the input cell y
+      let x1 = x + dir[1];
+
+      // If the neighbour cell is live and the cell Exists on the board ( Few edge cases on the side), neignbours +1
+      if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+        neighbors++;
+      }
+    }
+    
+    return neighbors;
   }
   
   // Since clicking an area of the board is relative to the client area (Where the board is located), this
@@ -246,7 +233,7 @@ export default class App extends Component {
 
         </div>
 
-        {/* Div that holds the run/stop button */}
+        {/* Div that holds the run button */}
         <div>
           
               <button onClick={this.startGame}>Evolve</button>
