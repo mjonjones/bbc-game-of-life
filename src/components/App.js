@@ -192,54 +192,32 @@ export default class App extends Component {
 
   // Function that evolves the game through each iteration
   evolveGame(){
-    // // Creates a new board
-    // let emptyBoard = this.makeBoard();
-    // // iterate through all the cells on the grid
-    // for (let y = 0; y < this.rows; y++) {
-    //   for (let x = 0; x < this.cols; x++) {
-
-    //       // Calculate number of neighbours the cell has
-    //       let neighbours = this.calculateCellNeighbours(this.board, x, y);
-    //       console.log("neigh " + neighbours);
-    //       // Conditions for the GAME OF LIFE
-    //       if (this.board[y][x]) {
-    //           if (neighbours === 2 || neighbours === 3) {
-    //               emptyBoard[y][x] = true;
-    //           } else {
-    //               emptyBoard[y][x] = false;
-    //           }
-    //       } else {
-    //           if (!this.board[y][x] && neighbours === 3) {
-    //               emptyBoard[y][x] = true;
-    //           }
-    //       }
-    //   }
-    // }
-
-  
+ 
+    // Creates a new board
     let newBoard = this.makeBoard();
-
-        for (let y = 0; y < this.rows; y++) {
-            for (let x = 0; x < this.columns; x++) {
-                let neighbors = this.numNeigh(this.board, x, y);
-                if (this.board[y][x]) {
-                    if (neighbors === 2 || neighbors === 3) {
-                        newBoard[y][x] = true;
-                    } else {
-                        newBoard[y][x] = false;
-                    }
-                } else {
-                    if (!this.board[y][x] && neighbors === 3) {
-                        newBoard[y][x] = true;
-                    }
-                }
-            }
+    // iterate through all the cells on the grid
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.columns; x++) {
+        // Calculate number of neighbours the cell has
+        let neighbors = this.numNeigh(this.board, x, y);
+        // Conditions for the GAME OF LIFE
+        if (this.board[y][x]) {
+          if (neighbors === 2 || neighbors === 3) {
+            newBoard[y][x] = true;
+          } else {
+            newBoard[y][x] = false;
+          }
+        } else {
+          if (!this.board[y][x] && neighbors === 3) {
+            newBoard[y][x] = true;
+          }
         }
-
-        this.board = newBoard;
-        // console.log(this.board);
-        this.setState({ cells: this.makeCells() });
-        console.log(this.cells);
+      }
+    }
+      
+    // Update Board and cells
+    this.board = newBoard;
+    this.setState({ cells: this.makeCells() });
 
 
   }
