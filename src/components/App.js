@@ -137,7 +137,7 @@ export default class App extends Component {
             let y1 = y + dir[0];
             let x1 = x + dir[1];
 
-            if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+            if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
                 neighbors++;
             }
         }
@@ -216,17 +216,11 @@ export default class App extends Component {
     //   }
     // }
 
-    // console.log("Board populated")
-    // // Updates the board and cells states.
-    // this.board = emptyBoard;
-    // console.log("Board Updated")
-    // this.setState({cells : this.makeCells})
-    // console.log("Cells Updated")
-
+  
     let newBoard = this.makeBoard();
 
         for (let y = 0; y < this.rows; y++) {
-            for (let x = 0; x < this.cols; x++) {
+            for (let x = 0; x < this.columns; x++) {
                 let neighbors = this.numNeigh(this.board, x, y);
                 if (this.board[y][x]) {
                     if (neighbors === 2 || neighbors === 3) {
@@ -243,16 +237,10 @@ export default class App extends Component {
         }
 
         this.board = newBoard;
-        console.log(this.board);
+        // console.log(this.board);
         this.setState({ cells: this.makeCells() });
         console.log(this.cells);
 
-    
-    // // Uses of window.setTimeout to loop iterations using "asynchronus coding"
-    // this.asynchTimeout = window.setTimeout(() => {
-    //   this.evolveGame();
-    //   // Every 100 ms
-    // }, this.state.evolveTime);
 
   }
 
@@ -262,6 +250,7 @@ export default class App extends Component {
 
     const cells = this.state.cells;
     console.log("Re-render");
+    console.log(this.board);
     return (
       <div>
         {/* Div that represents the board, using App.css */}
@@ -283,7 +272,7 @@ export default class App extends Component {
         <div>
           
               <button onClick={this.startGame}>Evolve</button>
-              {/* <button onClick={this.stopGame}>Stop</button> */}
+              
         </div>
 
     </div>
